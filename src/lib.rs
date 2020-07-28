@@ -78,6 +78,16 @@ where
     Ok(serde_yaml::from_reader::<R, OpenApi>(read)?)
 }
 
+
+pub fn from_path_json<P>(path: P) -> Result<OpenApi> where P : AsRef<Path> {
+    from_reader_json(File::open(path)?)
+}
+
+pub fn from_reader_json<R>(read: R) -> Result<OpenApi> 
+where R: Read {
+    Ok(serde_json::from_reader::<R, OpenApi>(read)?)
+}
+
 /// serialize to a yaml string
 pub fn to_yaml(spec: &OpenApi) -> Result<String> {
     Ok(serde_yaml::to_string(spec)?)
